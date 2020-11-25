@@ -23,9 +23,6 @@ const modal = () => {
         event.preventDefault();
         document.querySelector('.popup-consultation').style.display = 'block';
       }
-      // if (window.innerWidth > 768) {
-      //   animation();
-      // }
     });
   });
 
@@ -54,3 +51,28 @@ const modal = () => {
   });
 };
 modal();
+
+// аккордеоны
+const accordions = () => {
+  const panelHeading = document.querySelectorAll('.panel-heading'), // заголовки аккордеона
+        panelCollapse = document.querySelectorAll('.panel-collapse'); // контент в аккордеоне
+  panelHeading.forEach((itemHeading) => {
+    itemHeading.addEventListener('click', (event) => {
+      event.preventDefault();
+      let contentAcc = itemHeading.nextElementSibling;
+
+      if (contentAcc.classList.contains('in')){
+        contentAcc.classList.remove('in');
+      } else {
+        contentAcc.classList.add('in');
+      }
+
+      panelCollapse.forEach((itemContent) => {
+        if (itemContent !== contentAcc) {
+          itemContent.classList.remove('in');
+        }
+      });
+    });
+  });
+};
+accordions();
