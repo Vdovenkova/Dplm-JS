@@ -96,3 +96,16 @@ const showHiddenBlocks = () => {
   });
 };
 showHiddenBlocks();
+
+// калькулятор
+const calculator = () => {
+  const switchOne = document.getElementById('switch-one');
+  
+  switchOne.addEventListener('click', (event) => {
+    let target = event.target;
+    // let valueTarget = target.value;
+    console.log('target: ', target);
+
+  });
+};
+calculator();
