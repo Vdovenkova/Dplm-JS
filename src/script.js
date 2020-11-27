@@ -346,8 +346,8 @@ const sendForm = () => {
       let target = event.target;
       if (target.classList.contains('phone-user') ||
               target.classList.contains('numders')) {
-          target.value = target.value.replace(/[^+\d]/, '');
-          // это для телефонов и для поля с метрами
+          target.value = target.value.replace(/[^\d]/g, '');
+          // это для телефонов и поля с метрами
       }
       if (target.classList.contains('name')) {
           target.value = target.value.replace(/[^А-Яа-яЁё\s]/ig, '');
