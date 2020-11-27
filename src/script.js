@@ -13,15 +13,26 @@ const modal = () => {
         event.preventDefault();
         document.querySelector('.popup-call').style.display = 'block';
       }
-      if (target.classList.contains('discount-btn') || target.classList.contains('construct-btn')){
+      if (target.classList.contains('discount-btn')){
         document.querySelector('.popup-discount').style.display = 'block';
       }
       if (target.classList.contains('gauging-button')){
         document.querySelector('.popup-check').style.display = 'block';
       }
-      if (target.classList.contains('consultation-btn')){
+      if (target.classList.contains('consultation-btn') &&
+            document.getElementById('question').value !== ''){ 
         event.preventDefault();
         document.querySelector('.popup-consultation').style.display = 'block';
+      }
+      if (target.matches('button.construct-btn') &&
+            document.getElementById('distance').value !== '') {
+        document.querySelector('.popup-discount').style.display = 'block';
+      } else if (document.getElementById('distance').value === '') {
+        let mess = document.createElement('div');
+        document.querySelector('button.construct-btn').before(mess);
+        mess.textContent = 'Заполните это поле!';
+        setTimeout(() => mess.remove(), 2000);
+        return;
       }
     });
   });
@@ -199,3 +210,163 @@ const calculator = () => {
   });
 };
 calculator();
+
+// Отправка данных из форм
+const sendForm = () => {
+  const forms = document.querySelectorAll('form');
+  const inpQuestion = document.getElementById('question');
+  // let nameInpQuest = inpQuestion.getAttribute('name');
+    // valInpQuest = inpQuestion.value;
+    // console.log(nameInpQuest);
+
+  // console.log('forms: ', forms);
+  const errorMessage = 'Ошибка! Что-то пошло не так..',
+    successMessage = 'Спасибо, мы скоро с Вами свяжемся!';
+  
+  const loadMessage = document.createElement('div');
+    let styleLoadMsg;
+
+  const statusMessage = document.createElement('div');
+  statusMessage.style.cssText = `
+    font-size: 18px;
+    color: #f28c07`;
+
+  const spinner = (elem) => {
+    loadMessage.classList.add('sk-flow');
+    elem.appendChild(loadMessage);
+    loadMessage.innerHTML = `
+      <div class="sk-flow-dot"></div>
+      <div class="sk-flow-dot"></div>
+      <div class="sk-flow-dot"></div>`;
+
+    styleLoadMsg = document.createElement('style');
+    styleLoadMsg.textContent = `
+        :root {
+          --sk-color: #f28c07;
+        }
+
+        .sk-flow {
+          margin: auto;
+          width: 60px;
+          height: 35px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .sk-flow-dot {
+          width: 13px;
+          height: 13px;
+          background-color: var(--sk-color);
+          border-radius: 50%;
+          animation: sk-flow 1.4s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s infinite
+            both;
+        }
+
+        .sk-flow-dot:nth-child(1) {
+          animation-delay: -0.3s;
+        }
+        .sk-flow-dot:nth-child(2) {
+          animation-delay: -0.15s;
+        }
+
+        @keyframes sk-flow {
+          0%,
+          80%,
+          100% {
+            transform: scale(0.3);
+          }
+          40% {
+            transform: scale(1);
+          }
+        }`;
+    document.head.appendChild(styleLoadMsg);
+  };
+
+  const delSpinner = () => {
+    loadMessage.remove();
+    styleLoadMsg.remove();
+  };
+
+  const postData = (body) => {
+    return fetch('./server.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+  };
+
+  forms.forEach((elem) => {
+    elem.addEventListener('submit', (event) => {
+      event.preventDefault();
+      spinner(elem);
+      const formData = new FormData(elem);
+      // сюда проверку элема, чтобы добавить интупы в формДата
+      if (elem.closest('.popup-consultation')) {
+        formData.append(inpQuestion.getAttribute('name'), inpQuestion.value);
+      }  
+      // сюда ещё из калькулятора
+      let body = {};
+      formData.forEach((value, key) => {
+        body[key] = value;
+      });
+
+      postData(body)
+        .then((respons) => {
+          if (respons.status !== 200) {
+            throw new Error('Status network not 200');
+          }
+          delSpinner();
+          elem.appendChild(statusMessage);
+          statusMessage.textContent = successMessage;
+        })
+        .catch((error) => {
+          delSpinner();
+          elem.appendChild(statusMessage);
+          statusMessage.textContent = errorMessage;
+          // console.log(error);
+        });
+        
+      setTimeout(() => {
+        elem.querySelectorAll('input').forEach((item) => {
+          item.value = '';
+        });
+        document.getElementById('question').value= '';
+        statusMessage.remove();
+      }, 6000);
+    });
+  });
+  
+  const validElems = (idElems) => {
+    let elems = document.getElementById(idElems);
+  //   // console.log(form);
+    elems.addEventListener('input', (event) => {
+      let target = event.target;
+      if (target.classList.contains('phone-user') ||
+              target.classList.contains('numders')) {
+          target.value = target.value.replace(/[^+\d]/, '');
+          // это для телефонов и для поля с метрами
+      }
+      if (target.classList.contains('name')) {
+          target.value = target.value.replace(/[^А-Яа-яЁё\s]/ig, '');
+      }
+      if (target.classList.contains('text')) {
+          target.value = target.value.replace(/[^А-Яа-яЁё\s\.,:;!?+-]/ig, '');
+          // это для вопроса из консультаций
+      }
+    });
+  };
+  
+  validElems('form1');
+  validElems('form2');
+  validElems('form3');
+  validElems('form4');
+  validElems('form5');
+  validElems('form6');
+  validElems('form7');
+  validElems('distance');
+  
+};
+sendForm();
