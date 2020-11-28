@@ -409,6 +409,9 @@ header .logo img {
 .constructor .tank-img {
   margin-left: 9rem;
 }
+.calc-result {
+  margin-left: 9rem;
+}
 .constructor .tank-btn {
   display: block;
   margin-left: auto;

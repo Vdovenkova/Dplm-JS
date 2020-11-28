@@ -164,14 +164,14 @@
                                 <div class="title-text">первый колодец (приемный)</div>
                                 <div class="select-box">
                                     <p><strong>Диаметр</strong></p>
-                                    <select class="form-control expand diameter-one">
+                                    <select class="form-control expand diameter-one calculator" name="calc-diameter-one">
                                         <option>1.4 метра</option>
                                         <option>2 метра</option>
                                     </select>
                                 </div>
                                 <div class="select-box">
                                     <p><strong>Количество колец</strong></p>
-                                    <select class="form-control expand rings-one">
+                                    <select class="form-control expand rings-one calculator" name="calc-rings-one">
                                         <option>1 штука</option>
                                         <option>2 штуки</option>
                                         <option>3 штуки</option>
@@ -182,14 +182,14 @@
                                     <div class="title-text">второй колодец (дренажный)</div>
                                     <div class="select-box">
                                         <p><strong>Диаметр</strong></p>
-                                        <select class="form-control expand diameter-two">
+                                        <select class="form-control expand diameter-two calculator" name="calc-diameter-two">
                                             <option>1.4 метра</option>
                                             <option>2 метра</option>
                                         </select>
                                     </div>
                                     <div class="select-box">
                                         <p><strong>Количество колец</strong></p>
-                                        <select class="form-control expand rings-two">
+                                        <select class="form-control expand rings-two calculator" name="calc-rings-two">
                                             <option>1 штука</option>
                                             <option>2 штуки</option>
                                             <option>3 штуки</option>
@@ -214,11 +214,8 @@
                         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
                              aria-labelledby="headingThree">
                             <div class="panel-body">
-                                </p>
-
                                 <div class="onoffswitch">
-                                    <input type="checkbox" name="onoffswitch-two" class="onoffswitch-checkbox"
-                                           id="myonoffswitch-two" checked>
+                                    <input type="checkbox" name="onoffswitch-two" class="onoffswitch-checkbox" id="myonoffswitch-two" checked>
                                     <label class="onoffswitch-label" for="myonoffswitch-two">
                                         <span class="onoffswitch-inner"></span>
                                         <span class="onoffswitch-switch"></span>
@@ -244,7 +241,7 @@
                              aria-labelledby="headingFour">
                             <div class="panel-body">
                                 <p><strong>Введите расстояние до дома</strong></p>
-                                    <input id="distance" class="numders" type="text" name="calc-dist-home" placeholder="Например: 5" required>
+                                    <input id="distance" class="numders calculator" type="text" name="calc-dist-home" placeholder="Например: 5" required>
                                     <button class="button construct-btn call-btn btn-popup">Получить расчет и скидку</button>
                             </div>
                         </div>
@@ -254,7 +251,8 @@
 
             <div class="col-lg-6 col-md-6 col-sm-6 wow fadeInRight">
                 <img class="tank-img" src="img/constructor/septic-tank.png" alt="tank">
-                <input id="calc-result" type="text" name="calc-result" placeholder="примерная стоимость" disabled>
+                <div class="calc-result"><strong>Примерная стоимость</strong></div>
+                <input id="calc-result" class="calculator" type="text" name="calc-result" placeholder="примерная стоимость" disabled>
             </div>
 
         </div>

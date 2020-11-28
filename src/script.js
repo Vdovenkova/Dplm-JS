@@ -3,7 +3,8 @@
 // всплывающие окна
 const modal = () => {
   const btnPopup = document.querySelectorAll('.btn-popup'), // это кнопки которые вызывают модалки
-        popup = document.querySelectorAll('.popup'); //это мод.окна
+        popup = document.querySelectorAll('.popup'), //это мод.окна
+        popupDiscount = document.querySelector('.popup-discount');
 
   // открытие
   btnPopup.forEach((elem) => {
@@ -14,7 +15,7 @@ const modal = () => {
         document.querySelector('.popup-call').style.display = 'block';
       }
       if (target.classList.contains('discount-btn')){
-        document.querySelector('.popup-discount').style.display = 'block';
+        popupDiscount.style.display = 'block';
       }
       if (target.classList.contains('gauging-button')){
         document.querySelector('.popup-check').style.display = 'block';
@@ -26,7 +27,9 @@ const modal = () => {
       }
       if (target.matches('button.construct-btn') &&
             document.getElementById('distance').value !== '') {
-        document.querySelector('.popup-discount').style.display = 'block';
+        // доб.модалке класс, чтобы калькулятор отправлялся только если есть этот класс
+        popupDiscount.classList.add('calculator-data');
+        popupDiscount.style.display = 'block';
       } else if (document.getElementById('distance').value === '') {
         let mess = document.createElement('div');
         document.querySelector('button.construct-btn').before(mess);
@@ -105,8 +108,6 @@ accordions();
 
 // кнопка Больше
 const showHiddenBlocks = () => {
-// visible-sm-block - этот класс виден на ширине экрана от 992 до 768, на остальных не виден
-// hidden - этот класс скрыт всегда
 // добавила трём скрытым элементам класс hidden-block
   const hiddenBlock = document.querySelectorAll('.hidden-block'),
     btnMore = document.querySelector('.add-sentence-btn');
@@ -138,6 +139,8 @@ const calculator = () => {
   if (switchOne.checked) {
     secondWell.style.display = 'none';
     calcResult.value = 10000;
+    diameterTwo.classList.remove('calculator');
+    ringsTwo.classList.remove('calculator');
   }
   switchTwo.checked = false;
 
@@ -148,16 +151,17 @@ const calculator = () => {
           ringsOneInd = ringsOne.options.selectedIndex, //кол-во колец первой камеры
           diameterTwoInd = diameterTwo.options.selectedIndex, //выбранный диаметр второй камеры
           ringsTwoInd = ringsTwo.options.selectedIndex; //кол-во колец первой камеры
-          //  console.log('diameterTwoInd: ', diameterTwoInd);
 
-    if (switchOne && !switchOne.checked) {
+    if (switchOne && !switchOne.checked) { // выбрано две камеры
       secondWell.style.display = 'block';
-      result = 15000; // выбрано две камеры
-    } else if (switchOne && switchOne.checked) {
+      diameterTwo.classList.add('calculator');
+      ringsTwo.classList.add('calculator');
+      result = 15000;
+    } else if (switchOne && switchOne.checked) { // выбрана одна камера
       secondWell.style.display = 'none';
-      // diameterTwoInd = 0;
-      // ringsTwoInd = 0;
-      result = 10000; // выбрана одна камера
+      diameterTwo.classList.remove('calculator');
+      ringsTwo.classList.remove('calculator');
+      result = 10000;
     }
 
     if (diameterOne && diameterOneInd === 0) {
@@ -197,7 +201,6 @@ const calculator = () => {
     }
 
     calcResult.value = result;
-    // console.log('calcResult.value ', calcResult.value);
   };
   
   calculatorBlock.addEventListener('change', (event) => {
@@ -206,20 +209,16 @@ const calculator = () => {
     if(target.matches('select') || target.matches('input')){
       countSumm();
     }
-    // console.dir(switchTwo);
   });
 };
 calculator();
 
 // Отправка данных из форм
 const sendForm = () => {
-  const forms = document.querySelectorAll('form');
-  const inpQuestion = document.getElementById('question');
-  // let nameInpQuest = inpQuestion.getAttribute('name');
-    // valInpQuest = inpQuestion.value;
-    // console.log(nameInpQuest);
+  const forms = document.querySelectorAll('form'),
+        inpQuestion = document.getElementById('question'),
+        popupDiscnt = document.querySelector('.popup-discount');
 
-  // console.log('forms: ', forms);
   const errorMessage = 'Ошибка! Что-то пошло не так..',
     successMessage = 'Спасибо, мы скоро с Вами свяжемся!';
   
@@ -308,6 +307,13 @@ const sendForm = () => {
         formData.append(inpQuestion.getAttribute('name'), inpQuestion.value);
       }  
       // сюда ещё из калькулятора
+      if (elem.closest('.calculator-data')) {
+        // construct-все поля из калькулятора, item-каждое поле
+        const construct = document.querySelectorAll('.calculator');
+        construct.forEach((item) => {
+          formData.append(item.getAttribute('name'), item.value);
+        });
+      }
       let body = {};
       formData.forEach((value, key) => {
         body[key] = value;
@@ -335,13 +341,16 @@ const sendForm = () => {
         });
         document.getElementById('question').value= '';
         statusMessage.remove();
+        if (popupDiscnt.classList.contains('calculator-data')) {
+          popupDiscnt.classList.remove('calculator-data');
+        }
       }, 6000);
     });
   });
   
   const validElems = (idElems) => {
     let elems = document.getElementById(idElems);
-  //   // console.log(form);
+
     elems.addEventListener('input', (event) => {
       let target = event.target;
       if (target.classList.contains('phone-user') ||
