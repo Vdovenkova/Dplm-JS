@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="fixed-gift">
-    <img src=images/gift.png alt>
+    <img class="btn-popup" data-popup="#gift" src=images/gift.png alt>
 </div>
 <header class="header-main">
     <div class="head">
@@ -35,15 +35,14 @@
                 <div class="right">
                     <div class="free-visit">
                         <img src="images/head-icon.png" alt="">
-                        <p><a href="#" class="open-popup" data-popup="#free_visit_form">Записаться на <br>бесплатный
-                            визит</a></p>
+                        <p><a href="#" class="open-popup btn-popup" data-popup="#free_visit_form">Записаться на <br>бесплатный визит</a></p>
                     </div>
                     <div class="call">
                         <div class="our-phone">
                             <span>Звоните круглосуточно!</span>
                             <p>+7 (800) 555-64-47</p>
                         </div>
-                        <button class="btn callback-btn" data-popup="#callback_form">Перезвоните мне</button>
+                        <button class="btn callback-btn btn-popup" data-popup="#callback_form">Перезвоните мне</button>
                     </div>
                 </div>
             </div>
@@ -207,8 +206,7 @@
                 <input type="tel" name="phone" id="phone" required placeholder="Ваш номер телефона...">
                 <button name="send" class="btn" type="submit">Записаться</button>
                 <p class="personal-data">
-                    <input type="checkbox" required id="check1"><label for="check1">Я согласен на обработку персональных
-                    данных</label>
+                    <input type="checkbox" required id="check1"><label for="check1">Я согласен на обработку персональных данных</label>
                 </p>
             </form>
 
@@ -380,15 +378,15 @@
                         <div class="choose-club">
                             <h5>Выбрать клуб</h5>
                             <div class="club">
-                                <input type="radio" id="footer_leto_mozaika" name="club-name" value="mozaika"><label
-                                    for="footer_leto_mozaika">
+                                <input type="radio" id="footer_leto_mozaika" name="club-name" value="mozaika">
+                                <label for="footer_leto_mozaika">
                                 <h6>Тело «Мозаика»</h6>
                                 <p>Россия, Москва, 7-я Кожуховская ул.,&nbsp;9</p>
                             </label>
                             </div>
                             <div class="club">
-                                <input type="radio" id="footer_leto_schelkovo" name="club-name" value="schelkovo"><label
-                                    for="footer_leto_schelkovo">
+                                <input type="radio" id="footer_leto_schelkovo" name="club-name" value="schelkovo">
+                                <label for="footer_leto_schelkovo">
                                 <h6>Тело «Щелково»</h6>
                                 <p>Россия, г. Щелково, ул. Советская, д.&nbsp;16</p>
                             </label>
@@ -397,11 +395,9 @@
                         <div class="call">
                             <p>Единый телефон</p>
                             <p class="tel">+7 (800) 555-64-47</p>
-                            <p class="input-text"><input type="tel" name="phone" id="callback_footer_form-phone"
-                                                         required="" placeholder="Ваш номер телефона..."></p>
+                            <p class="input-text"><input type="tel" name="phone" id="callback_footer_form-phone" required="" placeholder="Ваш номер телефона..."></p>
 
-                            <button class="btn callback-btn" type="submit" data-popup="#callback_form">Перезвоните мне
-                            </button>
+                            <button class="btn callback-btn" type="submit">Перезвоните мне</button>
                         </div>
                     </div>
                 </form>
@@ -411,18 +407,21 @@
             <div class="left">© Фитнес-центр «Тело», 2019. Все права защищены.</div>
             <div class="right">
                 <div class="socials">
-                    <div class="social-icon"><a href="#"><!-- <img src="images/footer-socials-vk.png" alt=""> --><i
-                            class="fa fa-vk" aria-hidden="true"></i></a></div>
-                    <div class="social-icon"><a href="#"><!-- <img src="images/footer-socials-2.png" alt=""> --><i
-                            class="fa fa-instagram" aria-hidden="true"></i></a></div>
-                    <div class="social-icon"><a href="#"><!-- <img src="images/footer-socials-youtube.png" alt=""> --><i
-                            class="fa fa-youtube-play" aria-hidden="true"></i></a></div>
                     <div class="social-icon"><a href="#">
-                        <!-- <img src="images/footer-socials-facebook.png" alt=""> --><i class="fa fa-facebook"
-                                                                                         aria-hidden="true"></i></a>
-                    </div>
-                    <div class="social-icon"><a href="#"><!-- <img src="images/footer-socials-twitter.png" alt=""> --><i
-                            class="fa fa-twitter" aria-hidden="true"></i></a></div>
+                        <!-- <img src="images/footer-socials-vk.png" alt=""> -->
+                        <i class="fa fa-vk" aria-hidden="true"></i></a></div>
+                    <div class="social-icon"><a href="#">
+                        <!-- <img src="images/footer-socials-2.png" alt=""> -->
+                        <i class="fa fa-instagram" aria-hidden="true"></i></a></div>
+                    <div class="social-icon"><a href="#">
+                        <!-- <img src="images/footer-socials-youtube.png" alt=""> -->
+                        <i class="fa fa-youtube-play" aria-hidden="true"></i></a></div>
+                    <div class="social-icon"><a href="#">
+                        <!-- <img src="images/footer-socials-facebook.png" alt=""> -->
+                        <i class="fa fa-facebook" aria-hidden="true"></i></a></div>
+                    <div class="social-icon"><a href="#">
+                        <!-- <img src="images/footer-socials-twitter.png" alt=""> -->
+                        <i class="fa fa-twitter" aria-hidden="true"></i></a></div>
                 </div>
             </div>
         </div>
@@ -446,8 +445,7 @@
                 <input type="hidden" name="form_name" value=" Обратный звонок">
                 <!--  <input type="hidden" name="club" value="<?=$_GET['club-name']?>"> -->
                 <p class="input-text"><input name="name" type="text" required placeholder="Ваше имя..."></p>
-                <p class="input-text"><input type="tel" name="phone" id="callback_form1-phone" required
-                                             placeholder="Ваш номер телефона..."></p>
+                <p class="input-text"><input type="tel" name="phone" id="callback_form1-phone" required placeholder="Ваш номер телефона..."></p>
                 <p class="personal-data">
                     <input type="checkbox" required id="check"><label for="check">Я согласен на обработку <br>персональных
                     данных</label>
@@ -471,8 +469,7 @@
                 <h4>Записаться на визит</h4>
                 <input type="hidden" name="form_name" value=" Записаться на визит">
                 <p class="input-text"><input name="name" type="text" required placeholder="Ваше имя..."></p>
-                <p class="input-text"><input type="tel" name="phone" id="callback_form2-phone" required
-                                             placeholder="Ваш номер телефона..."></p>
+                <p class="input-text"><input type="tel" name="phone" id="callback_form2-phone" required placeholder="Ваш номер телефона..."></p>
                 <p class="personal-data">
                     <input type="checkbox" required id="check2"><label for="check2">Я согласен на обработку <br>персональных
                     данных</label>
@@ -511,8 +508,8 @@
             <button class="btn close-btn">OK</button>
         </div>
     </div>
-
 </div>
+
 <script src="src/script.js"></script>
 </body>
 </html>
