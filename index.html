@@ -8,7 +8,8 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;subset=cyrillic" rel="stylesheet">
     <link rel="stylesheet" href="css/font-awesome.min.css">
 
-    <link rel="stylesheet" href="css/style.min.css">
+    <!-- <link rel="stylesheet" href="css/style.min.css"> -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <div class="fixed-gift">
@@ -440,7 +441,7 @@
             <img src="images/close-icon.png" alt="close" class="close_icon">
         </div>
         <div class="form-content">
-            <form name="callback-form" id="form1" action="#" method="post">
+            <form name="callback_form" id="form1" action="#" method="post">
                 <h4>Обратный звонок</h4>
                 <input type="hidden" name="form_name" value=" Обратный звонок">
                 <!--  <input type="hidden" name="club" value="<?=$_GET['club-name']?>"> -->
@@ -465,15 +466,17 @@
             <img src="images/close-icon.png" alt="close" class="close_icon">
         </div>
         <div class="form-content">
-            <form name="free-visit-form" id="form2" action="#" method="post">
+            <form name="free_visit_form" id="form2" action="#" method="post">
                 <h4>Записаться на визит</h4>
                 <input type="hidden" name="form_name" value=" Записаться на визит">
-                <p class="input-text"><input name="name" type="text" required placeholder="Ваше имя..."></p>
-                <p class="input-text"><input type="tel" name="phone" id="callback_form2-phone" required placeholder="Ваш номер телефона..."></p>
+                <p class="input-text">
+                    <input name="name" type="text" required placeholder="Ваше имя...">
+                </p>
+                <p class="input-text">
+                    <input type="tel" name="phone" id="callback_form2-phone" required placeholder="Ваш номер телефона...">
+                </p>
                 <p class="personal-data">
-                    <input type="checkbox" required id="check2"><label for="check2">Я согласен на обработку <br>персональных
-                    данных</label>
-
+                    <input type="checkbox" required id="check2"><label for="check2">Я согласен на обработку <br>персональных данных</label>
                 </p>
                 <button name="send1" class="btn btn-send" type="submit">записаться</button>
             </form>
@@ -495,6 +498,20 @@
         </div>
     </div>
 </div>
+<div class="popup" id="error-send">
+    <div class="overlay">
+    </div>
+    <div class="form-wrapper">
+        <div class="close-form">
+            <img src="images/close-icon.png" alt="close" class="close_icon">
+        </div>
+        <div class="form-content">
+            <h4>Ошибка!</h4>
+            <p>Данные не были отправлены. <br> Пожалуйста, попробуйте позже.</p>
+            <button class="btn close-btn">OK</button>
+        </div>
+    </div>
+</div>
 <div class="popup" id="gift">
     <div class="overlay">
     </div>
@@ -504,7 +521,7 @@
         </div>
         <div class="form-content">
             <h4>У нас для вас есть подарок!</h4>
-            <p>Введите промо-код ТЕЛО2019 и получите скидку 30%</p>
+            <p>Введите промо-код ТЕЛО2020 и получите скидку 30%</p>
             <button class="btn close-btn">OK</button>
         </div>
     </div>
