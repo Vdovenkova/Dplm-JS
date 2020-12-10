@@ -813,7 +813,8 @@ button {
   z-index: 100;
 }
 header {
-  max-height: 700px;
+  max-height: 741px;
+  /* max-height: 700px; */
   position: relative;
 }
 header .head {

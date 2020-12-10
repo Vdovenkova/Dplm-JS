@@ -72,19 +72,9 @@ const sendForm = () => {
   const forms = document.querySelectorAll('form');
   const successMessage = document.getElementById('thanks'),
         errorMessage = document.getElementById('error-send');
-
-  // const errorMessage = 'Ошибка! Что-то пошло не так..',
-  //   successMessage = 'Спасибо, мы скоро с Вами свяжемся!';
-  
+    
   const loadMessage = document.createElement('div');
     let styleLoadMsg;
-
-  const statusMessage = document.createElement('div');
-  statusMessage.style.cssText = `
-    margin-top: 10px;
-    font-size: 18px;
-    color: #ffd11a;
-    text-align: center`;
 
   const spinner = (elem) => {
     loadMessage.classList.add('sk-flow');
@@ -157,6 +147,9 @@ const sendForm = () => {
   forms.forEach((elem) => {
     elem.addEventListener('submit', (event) => {
       event.preventDefault();
+      // ещё нужно проверять флаг согласия на обработку данных
+      // если не стоит выдавать сообщение, что нужно поставить флаг
+      // и потом сбрасывать через пару секунд
       spinner(elem);
       const formData = new FormData(elem);
       let body = {};
@@ -180,10 +173,6 @@ const sendForm = () => {
         })
         .catch((error) => {
           delSpinner();
-          // очищаем форму
-          // убираем модалку
-          // вызываем модалку id="error-send"
-          // вместо двух следующих строк
           elem.reset();
           if (elem.closest('.popup')) {
             let idForm = elem.getAttribute('name'),
@@ -191,11 +180,27 @@ const sendForm = () => {
             formWrap.style.display = 'none';
           }
           errorMessage.style.display = 'block';
-          // elem.appendChild(statusMessage);
-          // statusMessage.textContent = errorMessage;
           console.error(error);
         });
     });
   });
 };
 sendForm();
+
+// стрелка вверх
+const getArrowUp = () => {
+  const arrowUp = document.getElementById('arrow-up');
+  arrowUp.style.display = 'none';
+
+  let headerHeight = document.querySelector('header').offsetHeight / 1.5;
+
+  document.addEventListener('scroll', () =>{
+    if (window.pageYOffset >= headerHeight) {
+      arrowUp.style.display = 'block';
+    } else {
+      arrowUp.style.display = 'none';
+    }
+  });
+  
+};
+getArrowUp();
