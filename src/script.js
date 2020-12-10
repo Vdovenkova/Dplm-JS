@@ -67,12 +67,22 @@ const modal = () => {
 };
 modal();
 
+// // галочка согласия обработки данных
+// const flagPermiss = () => {
+//   console.log('начальное значение чекбокса', document.getElementById('check2').checked);
+//   document.getElementById('check2').addEventListener('click', (event) => {
+//     let target = event.target;
+//     console.log('кликаем по чекбоксу ', target.checked);
+//   });
+// /* <input type="checkbox" required="" id="check1"></input> */
+// };
+// flagPermiss();
+
 // Отправка данных из форм
 const sendForm = () => {
   const forms = document.querySelectorAll('form');
   const successMessage = document.getElementById('thanks'),
         errorMessage = document.getElementById('error-send');
-    
   const loadMessage = document.createElement('div');
     let styleLoadMsg;
 
@@ -134,6 +144,14 @@ const sendForm = () => {
     styleLoadMsg.remove();
   };
 
+  const changeForm = (elem) => {
+    if (elem.closest('.popup')) {
+      let idForm = elem.getAttribute('name'),
+      formWrap = document.getElementById(idForm);
+      formWrap.style.display = 'none';
+    }
+  };
+
   const postData = (body) => {
     return fetch('./server.php', {
       method: 'POST',
@@ -147,9 +165,25 @@ const sendForm = () => {
   forms.forEach((elem) => {
     elem.addEventListener('submit', (event) => {
       event.preventDefault();
-      // ещё нужно проверять флаг согласия на обработку данных
-      // если не стоит выдавать сообщение, что нужно поставить флаг
-      // и потом сбрасывать через пару секунд
+      let checkInp = elem.querySelector('input[type="checkbox"]');
+      // let radioInp = elem.querySelectorAll('input[type="radio"]');
+
+      // if(elem.id === 'footer_form' && !radioInp[0].checked || !radioInp[1].checked) {
+      //   alert('Выберите клуб');
+      //   return;
+      // }
+
+      if(elem.id !== 'footer_form' && !checkInp.checked) {
+        let alertMess = document.createElement('div');
+          alertMess.textContent = 'Пожалуйста, согласитесь с обработкой данных!';
+          alertMess.style.cssText = `
+            padding-top: 15px;
+            color: #ffd11a;`;
+          elem.append(alertMess);
+          setTimeout(() => alertMess.remove(), 1500);
+        return;
+      }
+
       spinner(elem);
       const formData = new FormData(elem);
       let body = {};
@@ -164,21 +198,13 @@ const sendForm = () => {
           }
           delSpinner();
           elem.reset();
-          if (elem.closest('.popup')) {
-            let idForm = elem.getAttribute('name'),
-            formWrap = document.getElementById(idForm);
-            formWrap.style.display = 'none';
-          }
+          changeForm(elem);
           successMessage.style.display = 'block';
         })
         .catch((error) => {
           delSpinner();
           elem.reset();
-          if (elem.closest('.popup')) {
-            let idForm = elem.getAttribute('name'),
-            formWrap = document.getElementById(idForm);
-            formWrap.style.display = 'none';
-          }
+          changeForm(elem);
           errorMessage.style.display = 'block';
           console.error(error);
         });
@@ -201,6 +227,10 @@ const getArrowUp = () => {
       arrowUp.style.display = 'none';
     }
   });
-  
+
+  arrowUp.addEventListener("click", (event) => {
+    event.preventDefault();
+    window.scrollTo({top: 10, behavior: 'smooth'});
+  });
 };
 getArrowUp();
