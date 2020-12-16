@@ -24,6 +24,28 @@ const getClubsList = () => {
 };
 getClubsList();
 
+// стрелка вверх
+const getArrowUp = () => {
+  const arrowUp = document.getElementById('arrow-up');
+  arrowUp.style.display = 'none';
+
+  let headerHeight = document.querySelector('header').offsetHeight / 1.5;
+
+  document.addEventListener('scroll', () =>{
+    if (window.pageYOffset >= headerHeight) {
+      arrowUp.style.display = 'block';
+    } else {
+      arrowUp.style.display = 'none';
+    }
+  });
+
+  arrowUp.addEventListener("click", (event) => {
+    event.preventDefault();
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+};
+getArrowUp();
+
 // всплывающие окна
 const modal = () => {
   // открываем окна
@@ -213,24 +235,24 @@ const sendForm = () => {
 };
 sendForm();
 
-// стрелка вверх
-const getArrowUp = () => {
-  const arrowUp = document.getElementById('arrow-up');
-  arrowUp.style.display = 'none';
+// валидация и маска для телефона
+maskPhone('input[type="tel"]');
 
-  let headerHeight = document.querySelector('header').offsetHeight / 1.5;
+const validElems = (idElems) => {
+  let elems = document.getElementById(idElems);
 
-  document.addEventListener('scroll', () =>{
-    if (window.pageYOffset >= headerHeight) {
-      arrowUp.style.display = 'block';
-    } else {
-      arrowUp.style.display = 'none';
+  elems.addEventListener('input', (event) => {
+    let target = event.target;
+    if (target.matches('input[type="text"]') && !target.closest('.price-message')) {
+        target.value = target.value.replace(/[^А-Яа-яЁё\s]/ig, '');
+    }
+    if (target.matches('input[type="text"]') && target.closest('.price-message')) {
+        target.value = target.value.replace(/[^А-Яа-яЁё\d]/ig, '');
     }
   });
-
-  arrowUp.addEventListener("click", (event) => {
-    event.preventDefault();
-    window.scrollTo({top: 10, behavior: 'smooth'});
-  });
 };
-getArrowUp();
+validElems('banner-form');
+validElems('card_order');
+validElems('footer_form');
+validElems('form1');
+validElems('form2');
