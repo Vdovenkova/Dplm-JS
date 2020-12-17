@@ -89,17 +89,6 @@ const modal = () => {
 };
 modal();
 
-// // галочка согласия обработки данных
-// const flagPermiss = () => {
-//   console.log('начальное значение чекбокса', document.getElementById('check2').checked);
-//   document.getElementById('check2').addEventListener('click', (event) => {
-//     let target = event.target;
-//     console.log('кликаем по чекбоксу ', target.checked);
-//   });
-// /* <input type="checkbox" required="" id="check1"></input> */
-// };
-// flagPermiss();
-
 // Отправка данных из форм
 const sendForm = () => {
   const forms = document.querySelectorAll('form');
@@ -188,26 +177,43 @@ const sendForm = () => {
     elem.addEventListener('submit', (event) => {
       event.preventDefault();
       let checkInp = elem.querySelector('input[type="checkbox"]');
-      // let radioInp = elem.querySelectorAll('input[type="radio"]');
+      let radioInp = elem.querySelectorAll('input[type="radio"]');
 
-      // if(elem.id === 'footer_form' && !radioInp[0].checked || !radioInp[1].checked) {
-      //   alert('Выберите клуб');
-      //   return;
-      // }
+      if(elem.id === 'footer_form') {
+        if (!radioInp[0].checked && !radioInp[1].checked) {
+          let alertMess = document.createElement('div');
+          alertMess.textContent = 'Пожалуйста, выберите клуб!';
+          alertMess.style.cssText = `
+            padding-top: 15px;
+            color: #ffd11a;
+            text-align: center;`;
+          elem.append(alertMess);
+          setTimeout(() => alertMess.remove(), 2000);
+          // alert('Выберите клуб');
+          return;}
+      }
 
       if(elem.id !== 'footer_form' && !checkInp.checked) {
         let alertMess = document.createElement('div');
           alertMess.textContent = 'Пожалуйста, согласитесь с обработкой данных!';
           alertMess.style.cssText = `
             padding-top: 15px;
-            color: #ffd11a;`;
+            color: #ffd11a;
+            text-align: center;`;
           elem.append(alertMess);
-          setTimeout(() => alertMess.remove(), 1500);
+          setTimeout(() => alertMess.remove(), 2000);
         return;
       }
 
       spinner(elem);
       const formData = new FormData(elem);
+      // сюда проверку элема, чтобы добавить в формДата данные
+      // если это калькулятор, то добавим промокод и сумму карты
+      /*
+      if (elem.closest('.popup-consultation')) {
+        formData.append(inpQuestion.getAttribute('name'), inpQuestion.value);
+      }
+      */
       let body = {};
       formData.forEach((value, key) => {
         body[key] = value;
@@ -298,7 +304,7 @@ const calculator = () => {
 
   cardSelection.addEventListener('input', (event) => {
     let target = event.target;
-    if(target.matches('input')) {
+    if(target.matches('input') &&  target.closest('.main-page')) {
       countSumm();}
   });
 
