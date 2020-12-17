@@ -91,11 +91,11 @@ modal();
 
 // Отправка данных из форм
 const sendForm = () => {
-  const forms = document.querySelectorAll('form');
-  const successMessage = document.getElementById('thanks'),
+  const forms = document.querySelectorAll('form'),
+        successMessage = document.getElementById('thanks'),
         errorMessage = document.getElementById('error-send');
   const loadMessage = document.createElement('div');
-    let styleLoadMsg;
+  let styleLoadMsg;
 
   const spinner = (elem) => {
     loadMessage.classList.add('sk-flow');
@@ -190,7 +190,8 @@ const sendForm = () => {
           elem.append(alertMess);
           setTimeout(() => alertMess.remove(), 2000);
           // alert('Выберите клуб');
-          return;}
+          return;
+        }
       }
 
       if(elem.id !== 'footer_form' && !checkInp.checked) {
@@ -207,13 +208,13 @@ const sendForm = () => {
 
       spinner(elem);
       const formData = new FormData(elem);
-      // сюда проверку элема, чтобы добавить в формДата данные
-      // если это калькулятор, то добавим промокод и сумму карты
-      /*
-      if (elem.closest('.popup-consultation')) {
-        formData.append(inpQuestion.getAttribute('name'), inpQuestion.value);
+      // если калькулятор, то ещё отправляем промокод и сумму карты
+      if (elem.closest('.main-page')) {
+        const promoCode = document.getElementById('promo'),
+              priceTotal = document.getElementById('price-total');
+        formData.append(promoCode.id, promoCode.value);
+        formData.append(priceTotal.id, priceTotal.textContent);
       }
-      */
       let body = {};
       formData.forEach((value, key) => {
         body[key] = value;
@@ -307,6 +308,5 @@ const calculator = () => {
     if(target.matches('input') &&  target.closest('.main-page')) {
       countSumm();}
   });
-
 };
 calculator();
