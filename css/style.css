@@ -1133,6 +1133,7 @@ nav.popup-menu .close-menu-btn img {
   z-index: 200;
 }
 .main-slider {
+  padding-top: 80px;
   height: 100%;
   max-height: 541px;
 }
@@ -1151,7 +1152,7 @@ nav.popup-menu .close-menu-btn img {
   z-index: 1001;
 }
 .main-slider .slide .slide-text .offer-head {
-  margin-top: 80px;
+  /* margin-top: 80px; */
   background: url(../images/slider-offer-bg.png) no-repeat 10px 0;
   padding-top: 20px;
 }
@@ -2020,10 +2021,13 @@ p.personal-data input[type="checkbox"]:checked + label:before {
   .main-slider .slide .slide-text {
     margin: 0 auto;
   }
+  .main-slider {
+    padding-top: 30px;
+  }
   .main-slider .slide .slide-text .offer-head,
   .main-slider .slide.type2 .slide-text .offer-head {
     background: transparent;
-    margin-top: 30px;
+    /* margin-top: 30px; */
     text-align: center;
   }
   .main-slider .slide .slide-text .offer-head .top,
