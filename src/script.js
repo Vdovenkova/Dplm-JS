@@ -1,5 +1,18 @@
 'use strict';
 
+// паттерн анимации
+function animate({duration, draw, timing}) {
+  let start = performance.now();
+  requestAnimationFrame(function animate(time) {
+    let timeFraction = (time - start) / duration;
+    if (timeFraction > 1) { timeFraction = 1; }
+    let progress = timing(timeFraction);
+    draw(progress);
+    if (timeFraction < 1) {
+      requestAnimationFrame(animate); }
+  });
+}
+
 // выпадающий список клубов
 const getClubsList = () => {
   const clubsList = document.querySelector('.clubs-list>ul');
@@ -54,7 +67,14 @@ const modal = () => {
       event.preventDefault();
       let target = event.target;
       let idPopup = target.dataset.popup.substr(1);
-      document.getElementById(idPopup).style.display = 'block';
+      let popUp = document.getElementById(idPopup);
+      let wrapPopup = popUp.querySelector('.form-wrapper');
+      popUp.style.display = 'block';
+      animate({
+        duration: 500,
+        timing: function(timeFraction) { return timeFraction; },
+        draw: function(progress) { wrapPopup.style.top = `${progress * 20}vh`; }
+      });
       if (target.closest('.fixed-gift')) {
         target.style.display = 'none';
       }
@@ -299,8 +319,12 @@ const calculator = () => {
     
     if (promo.value === 'ТЕЛО2020') {total = total * 0.7;}
 
-    total = Math.floor(total);
-    priceTotal.textContent = total;
+    animate({
+      duration: 500,
+      timing: function(timeFraction) { return timeFraction; },
+      draw: function(progress) {
+        priceTotal.textContent = Math.floor(progress * total); }
+    });
   };
 
   cardSelection.addEventListener('input', (event) => {
