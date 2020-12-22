@@ -1,17 +1,15 @@
 'use strict';
 
-import getClubsList from './modules/getClubsList';
-import getArrowUp from './modules/getArrowUp';
-import modal from './modules/modal';
+import popup from './modules/popup';
+import sliders from './modules/sliders';
+// import accordions from './modules/accordions';
+// import showHiddenBlocks from './modules/showHiddenBlocks';
+// import calculator from './modules/calculator';
 import sendForm from './modules/sendForm';
-import calculator from './modules/calculator';
-import headerSlider from './modules/headerSlider';
 
-import maskPhone from './plugins/maskPhone';
-
-getClubsList();
-getArrowUp();
-modal();
+popup();
+sliders();
+// accordions();
+// showHiddenBlocks();
+// calculator();
 sendForm();
-calculator();
-headerSlider();

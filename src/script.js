@@ -12,6 +12,16 @@ function animate({duration, draw, timing}) {
       requestAnimationFrame(animate); }
   });
 }
+// анимация всех модальных окон
+const animPopup = (popupBlock) => {
+    let wrapPopup = popupBlock.querySelector('.form-wrapper');
+    popupBlock.style.display = 'block';
+    animate({
+    duration: 300,
+    timing: function(timeFraction) { return timeFraction; },
+    draw: function(progress) { wrapPopup.style.top = `${progress * 20}vh`; }
+    });
+  };
 
 // выпадающий список клубов
 const getClubsList = () => {
@@ -68,13 +78,14 @@ const modal = () => {
       let target = event.target;
       let idPopup = target.dataset.popup.substr(1);
       let popUp = document.getElementById(idPopup);
-      let wrapPopup = popUp.querySelector('.form-wrapper');
-      popUp.style.display = 'block';
-      animate({
-        duration: 500,
-        timing: function(timeFraction) { return timeFraction; },
-        draw: function(progress) { wrapPopup.style.top = `${progress * 20}vh`; }
-      });
+      animPopup(popUp);
+      // let wrapPopup = popUp.querySelector('.form-wrapper');
+      // popUp.style.display = 'block';
+      // animate({
+      //   duration: 500,
+      //   timing: function(timeFraction) { return timeFraction; },
+      //   draw: function(progress) { wrapPopup.style.top = `${progress * 20}vh`; }
+      // });
       if (target.closest('.fixed-gift')) {
         target.style.display = 'none';
       }
@@ -248,13 +259,15 @@ const sendForm = () => {
           delSpinner();
           elem.reset();
           changeForm(elem);
-          successMessage.style.display = 'block';
+          // successMessage.style.display = 'block';
+          animPopup(successMessage);
         })
         .catch((error) => {
           delSpinner();
           elem.reset();
           changeForm(elem);
-          errorMessage.style.display = 'block';
+          // errorMessage.style.display = 'block';
+          animPopup(errorMessage);
           console.error(error);
         });
     });
@@ -329,7 +342,7 @@ const calculator = () => {
 
   cardSelection.addEventListener('input', (event) => {
     let target = event.target;
-    if(target.matches('input') &&  target.closest('.main-page')) {
+    if(target.matches('input#promo, input[type="radio"]') &&  target.closest('.main-page')) {
       countSumm();}
   });
 };
