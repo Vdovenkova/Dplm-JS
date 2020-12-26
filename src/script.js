@@ -50,6 +50,8 @@ getClubsList();
 // стрелка вверх
 const getArrowUp = () => {
   const arrowUp = document.getElementById('arrow-up');
+  // нужно сразу проверять вот это window.pageYOffset >= headerHeight
+  // если тру, стрелка есть, иначе - нет.
   arrowUp.style.display = 'none';
 
   let headerHeight = document.querySelector('header').offsetHeight / 1.5;
@@ -427,3 +429,60 @@ const headerSlider = () => {
   startSlide(6000);
 };
 headerSlider();
+
+// меню
+const toggleMenu = () => {
+  const headBlock = document.querySelector('.head');
+  const topMenu = document.querySelector('.top-menu');
+
+  // стиль для фиксации полоски меню
+  let styleTopMenu = document.createElement('style');
+  styleTopMenu.textContent = `
+    .pos-fix {
+      position: fixed;
+      top: 0;
+    }
+    .mg-bttm {
+      margin-bottom: 58px;
+    }`;
+  document.head.append(styleTopMenu);
+
+  // класс из стиля либо добавляестя либо удаляется при скролле
+  document.addEventListener('scroll', () => {
+    let headHeight = headBlock.offsetHeight;
+    if (window.innerWidth < 768 && window.pageYOffset >= headHeight) {
+      topMenu.classList.add('pos-fix');
+      headBlock.classList.add('mg-bttm');
+    } else if (window.pageYOffset < headHeight) {
+      topMenu.classList.remove('pos-fix');
+      headBlock.classList.remove('mg-bttm');
+    }
+  });
+  // убираем фиксацию меню при изменении ширины экрана
+  // надо бы при уменьшении ширины экрана делать, чтобы полоска меню появлялась вверху
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 768 && topMenu.classList.contains('pos-fix')) {
+      topMenu.classList.remove('pos-fix');
+      headBlock.classList.remove('mg-bttm');
+    }
+  });
+
+  // плавный переход к блокам сайта из меню и из подвала (вынести в отдельную ф-цию)
+  const slowScrollBlocks = (event, elem) => {
+    event.preventDefault();
+    const blockID = elem.getAttribute('href').substr(1);
+    document.getElementById(blockID).scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  };
+  document.addEventListener('click', (event) => {
+    let target = event.target;
+    // event.preventDefault();
+    if (target.matches('li a') &&
+     target.closest('.top-menu, .popup-menu, #footer')) {
+      slowScrollBlocks (event, target);
+    }
+  });
+};
+toggleMenu();
