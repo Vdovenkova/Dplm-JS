@@ -397,10 +397,10 @@ html#schelkovo .breadcrumbs a:after {
   bottom: 28px;
   padding-left: 7px;
 }
-html#mozaika .advantages,
+/* html#mozaika .advantages,
 html#schelkovo .advantages {
   margin-top: 49px;
-}
+} */
 html#mozaika .advantages .wrapper,
 html#schelkovo .advantages .wrapper {
   display: -webkit-box;
@@ -413,7 +413,7 @@ html#schelkovo .advantages .wrapper {
 html#mozaika .advantage,
 html#schelkovo .advantage {
   width: 145px;
-  height: 156px;
+  min-height: 156px;
   margin-bottom: 20px;
   border: 1px solid rgba(39, 25, 48, 0.14);
   background-color: #fff;
@@ -796,7 +796,7 @@ h2:after {
   top: 45px;
 }
 section {
-  padding-top: 56px;
+  padding-top: 65px;
 }
 a,
 button {

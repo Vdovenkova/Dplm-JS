@@ -73,7 +73,7 @@ getArrowUp();
 
 // всплывающие окна
 const modal = () => {
-  // открываем окна
+  // открываем окна с анимацией
   document.querySelectorAll('.btn-popup').forEach((elem) => {
     elem.addEventListener('click', (event) => {
       event.preventDefault();
@@ -81,13 +81,6 @@ const modal = () => {
       let idPopup = target.dataset.popup.substr(1);
       let popUp = document.getElementById(idPopup);
       animPopup(popUp);
-      // let wrapPopup = popUp.querySelector('.form-wrapper');
-      // popUp.style.display = 'block';
-      // animate({
-      //   duration: 500,
-      //   timing: function(timeFraction) { return timeFraction; },
-      //   draw: function(progress) { wrapPopup.style.top = `${progress * 20}vh`; }
-      // });
       if (target.closest('.fixed-gift')) {
         target.style.display = 'none';
       }
@@ -430,8 +423,24 @@ const headerSlider = () => {
 };
 headerSlider();
 
-// меню
+// открываем закрываем мобильное меню 
 const toggleMenu = () => {
+  const popupMenu = document.querySelector('.popup-menu');
+  document.querySelector('header').addEventListener('click', (event) => {
+    let target = event.target;
+    // console.log(target);
+    if (target.matches('.menu-button>img')) {
+      popupMenu.style.display = 'flex';
+    }
+    if (target.matches('.close-menu-btn>img') || target.closest('.scroll') && target.closest('.popup-menu')) {
+      popupMenu.style.display = 'none';
+    }
+  });
+};
+toggleMenu();
+
+// фиксируем полоску меню вверху экрана при скролле. на ширине меньше 768.
+const fixMenu = () => {
   const headBlock = document.querySelector('.head');
   const topMenu = document.querySelector('.top-menu');
 
@@ -459,15 +468,17 @@ const toggleMenu = () => {
     }
   });
   // убираем фиксацию меню при изменении ширины экрана
-  // надо бы при уменьшении ширины экрана делать, чтобы полоска меню появлялась вверху
   window.addEventListener('resize', () => {
     if (window.innerWidth >= 768 && topMenu.classList.contains('pos-fix')) {
       topMenu.classList.remove('pos-fix');
       headBlock.classList.remove('mg-bttm');
     }
   });
+};
+fixMenu();
 
-  // плавный переход к блокам сайта из меню и из подвала (вынести в отдельную ф-цию)
+// плавный переход к блокам сайта из меню и футера
+const smoothScroll = () => {
   const slowScrollBlocks = (event, elem) => {
     event.preventDefault();
     const blockID = elem.getAttribute('href').substr(1);
@@ -485,4 +496,4 @@ const toggleMenu = () => {
     }
   });
 };
-toggleMenu();
+smoothScroll();
