@@ -1396,8 +1396,10 @@ nav.popup-menu .close-menu-btn img {
 }
 #gallery .gallery-bg {
   background: url(../images/gallery-bg.png) left center no-repeat;
+  background-size: contain;
 }
 #gallery .gallery-slider {
+  position: relative;
   padding-left: 75px;
   padding-right: 75px;
   max-width: 900px;
