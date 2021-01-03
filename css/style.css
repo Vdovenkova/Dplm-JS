@@ -1339,27 +1339,30 @@ nav.popup-menu .close-menu-btn img {
   margin-right: 5px;
 }
 .services-slider {
-  display: flex;
+  position: relative;
   margin: 0 auto;
-  padding-left: 15px;
-  padding-right: 15px;
+  /* padding-left: 15px;
+  padding-right: 15px; */
 }
-.services-slider .slide {
+.services-slider .services-slider__wrap {
+  display: flex;
+}
+.services-slider .services-slider__wrap .slide {
   text-align: center;
   margin-right: 6px;
   margin-left: 6px;
   width: 210px;
 }
-.services-slider .slide img {
+.services-slider .services-slider__wrap .slide img {
   margin: 0 auto 19px;
 }
-.services-slider .slide h6 {
+.services-slider .services-slider__wrap .slide h6 {
   color: #2e2e2e;
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 8px;
 }
-.services-slider .slide p {
+.services-slider .services-slider__wrap .slide p {
   color: #616161;
   font-size: 14px;
   font-weight: 300;
@@ -1386,10 +1389,10 @@ nav.popup-menu .close-menu-btn img {
   padding-top: 11px;
 }
 .services-slider .slider-arrow.prev {
-  left: 2px;
+  left: 0;
 }
 .services-slider .slider-arrow.next {
-  right: 2px;
+  right: 0;
 }
 #gallery {
   background-color: #fff;
