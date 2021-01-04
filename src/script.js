@@ -583,7 +583,7 @@ fixMenu();
 // плавный переход к блокам сайта из меню и футера
 const smoothScroll = () => {
   const slowScrollBlocks = (event, elem) => {
-    event.preventDefault();
+    // event.preventDefault();
     const blockID = elem.getAttribute('href').substr(1);
     document.getElementById(blockID).scrollIntoView({
       behavior: 'smooth',
@@ -592,9 +592,9 @@ const smoothScroll = () => {
   };
   document.addEventListener('click', (event) => {
     let target = event.target;
-    // event.preventDefault();
-    if (target.matches('li a') &&
+    if (!target.closest('.clubs') && target.matches('li a') &&
      target.closest('.top-menu, .popup-menu, #footer')) {
+      event.preventDefault();
       slowScrollBlocks (event, target);
     }
   });
