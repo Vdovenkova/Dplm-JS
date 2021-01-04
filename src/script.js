@@ -121,7 +121,7 @@ const sendForm = () => {
         successMessage = document.getElementById('thanks'),
         errorMessage = document.getElementById('error-send');
   const loadMessage = document.createElement('div');
-  let styleLoadMsg;
+  let styleLoadMsg, textMess, alertMess;
 
   const spinner = (elem) => {
     loadMessage.classList.add('sk-flow');
@@ -189,6 +189,16 @@ const sendForm = () => {
     }
   };
 
+  const showAlertMess = (textMess, elem) => {
+    alertMess = document.createElement('div');
+    alertMess.textContent = textMess;
+    alertMess.style.cssText = `
+      padding-top: 15px;
+      color: #ffd11a;
+      text-align: center;`;
+    elem.append(alertMess);
+  };
+
   const postData = (body) => {
     return fetch('./server.php', {
       method: 'POST',
@@ -204,35 +214,23 @@ const sendForm = () => {
       event.preventDefault();
       let checkInp = elem.querySelector('input[type="checkbox"]');
       let radioInp = elem.querySelectorAll('input[type="radio"]');
-
+      // проверка выбора клуба в футере
       if(elem.id === 'footer_form') {
         if (!radioInp[0].checked && !radioInp[1].checked) {
-          let alertMess = document.createElement('div');
-          alertMess.textContent = 'Пожалуйста, выберите клуб!';
-          alertMess.style.cssText = `
-            padding-top: 15px;
-            color: #ffd11a;
-            text-align: center;`;
-          elem.append(alertMess);
+          textMess = `Пожалуйста, выберите клуб!`;
+          showAlertMess(textMess, elem);
           setTimeout(() => alertMess.remove(), 2000);
-          // alert('Выберите клуб');
           return;
         }
       }
-
+      // проверка флага согласия обработки данных
       if(elem.id !== 'footer_form' && !checkInp.checked) {
-        let alertMess = document.createElement('div');
-          alertMess.textContent = 'Пожалуйста, согласитесь с обработкой данных!';
-          alertMess.style.cssText = `
-            padding-top: 15px;
-            color: #ffd11a;
-            text-align: center;`;
-          elem.append(alertMess);
-          setTimeout(() => alertMess.remove(), 2000);
+        textMess = `Пожалуйста, согласитесь с обработкой данных!`;
+        showAlertMess(textMess, elem);
+        setTimeout(() => alertMess.remove(), 2000);
         return;
       }
-
-      spinner(elem);
+      spinner(elem); // добавляем спиннер пока отправляются данные
       const formData = new FormData(elem);
       // если калькулятор, то ещё отправляем промокод и сумму карты
       if (elem.closest('.main-page')) {
