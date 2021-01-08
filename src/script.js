@@ -537,9 +537,10 @@ toggleMenu();
 const fixMenu = () => {
   const headBlock = document.querySelector('.head');
   const topMenu = document.querySelector('.top-menu');
+  let styleTopMenu, headHeight;
 
   // стиль для фиксации полоски меню
-  let styleTopMenu = document.createElement('style');
+  styleTopMenu = document.createElement('style');
   styleTopMenu.textContent = `
     .pos-fix {
       position: fixed;
@@ -562,7 +563,7 @@ const fixMenu = () => {
   // при скролле полоска убирается или появляется путём
   // добавляения либо удаления класса из стиля
   document.addEventListener('scroll', () => {
-    let headHeight = headBlock.offsetHeight;
+    headHeight = headBlock.offsetHeight;
     if (window.innerWidth < 768 && window.pageYOffset >= headHeight) {
       addClasses();
     } else if (window.pageYOffset < headHeight) {
@@ -571,9 +572,10 @@ const fixMenu = () => {
   });
   // при изменении ширины экрана полоска меню убирается или появляется
   window.addEventListener('resize', () => {
+    headHeight = headBlock.offsetHeight;
     if (window.innerWidth >= 768 && topMenu.classList.contains('pos-fix')) {
       delClasses();
-    } else if (window.innerWidth < 768) {
+    } else if (window.innerWidth < 768 && window.pageYOffset >= headHeight) {
       addClasses();
     }
   });
