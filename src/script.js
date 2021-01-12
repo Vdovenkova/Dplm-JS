@@ -627,8 +627,9 @@ class SliderCarousel {
     this.options = {
       infinity,
       position,
-      widthSlide: Math.floor(100 / this.slidesToShow),
-      maxPosition: this.slides.length - this.slidesToShow
+      widthSlide: Math.floor(100 / slidesToShow),
+      // widthSlide: Math.floor(100 / this.slidesToShow),
+      // maxPosition: this.slides.length - this.slidesToShow
     };
     this.responsive = responsive;
   }
@@ -638,9 +639,9 @@ class SliderCarousel {
     this.addCarouselStyle();
     this.controlSlider();
     // console.log(this.options.widthSlide);
-    // if (this.responsive){
-    //   this.responseInit();
-    // }
+    if (this.responsive){
+      this.responseInit();
+    }
   }
 
   addCarouselClass(){
@@ -681,7 +682,8 @@ class SliderCarousel {
     if (this.options.infinity || this.options.position > 0) {
       --this.options.position;
       if (this.options.position < 0){
-        this.options.position = this.options.maxPosition;
+        // this.options.position = this.options.maxPosition;
+        this.options.position = this.slides.length - this.slidesToShow;
       }
       this.wrap.style.transform = `
           translateX(${-this.options.position * this.options.widthSlide}%)`;
@@ -689,16 +691,17 @@ class SliderCarousel {
   }
 
   nextSlider(){
-    if (this.options.infinity || this.options.position < this.options.maxPosition){
+    // if (this.options.infinity || this.options.position < this.options.maxPosition){
+    if (this.options.infinity || this.options.position < this.slides.length - this.slidesToShow){
       ++this.options.position;
-      if (this.options.position > this.options.maxPosition) {
+      // if (this.options.position > this.options.maxPosition) {
+      if (this.options.position > this.slides.length - this.slidesToShow) {
         this.options.position = 0;
       }
       this.wrap.style.transform = `
           translateX(${-this.options.position * this.options.widthSlide}%)`;
     }
   }
-  /*
   responseInit(){
     const slidesToShowDefault = this.slidesToShow;
     const allResponse = this.responsive.map(item => item.breakpoint);
@@ -711,18 +714,18 @@ class SliderCarousel {
           if (widthWindow < allResponse[i]) {
             this.slidesToShow = this.responsive[i].slidesToShow;
             this.options.widthSlide = Math.floor(100 / this.slidesToShow);
-            this.addStyle();
+            this.addCarouselStyle();
           }
         }
       } else {
         this.slidesToShow = slidesToShowDefault;
         this.options.widthSlide = Math.floor(100 / this.slidesToShow);
-        this.addStyle();
+        this.addCarouselStyle();
       }
     };
     chekResponse();
     window.addEventListener('resize', chekResponse);
-  }*/
+  }
 }
 const carousel = new SliderCarousel({
   main: '.services-slider',
@@ -730,19 +733,19 @@ const carousel = new SliderCarousel({
   next: '#carousel-next',
   prev: '#carousel-prev',
   slidesToShow: 5,
-  infinity: true
-//   responsive: [{
-//       breakpoint: 1024,
-//       slidesToShow: 3
-//     },
-//     {
-//       breakpoint: 768,
-//       slidesToShow: 2
-//     },
-//     {
-//       breakpoint: 576,
-//       slidesToShow: 1
-//     }
-//   ]
+  infinity: true,
+  responsive: [{
+      breakpoint: 1024,
+      slidesToShow: 3
+    },
+    {
+      breakpoint: 768,
+      slidesToShow: 2
+    },
+    {
+      breakpoint: 576,
+      slidesToShow: 1
+    }
+  ]
 });
 carousel.init();
