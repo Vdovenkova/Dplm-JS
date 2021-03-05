@@ -759,10 +759,13 @@ header .logo img {
   align-items: center;
 }
 .director {
-  padding: 9rem;
+  padding: 9rem 0;
   background: url(../img/director/director-bg-two.jpg) center no-repeat;
   background-size: cover;
   color: #fff;
+}
+.director .container {
+  margin: auto;
 }
 .director img {
   margin-top: 4rem;
@@ -1152,6 +1155,9 @@ header .logo img {
   .gauging {
     text-align: center;
   }
+  .gauging-imgwrap {
+    display: none;
+  }
   .gauging h2 {
     font-size: 2rem;
     margin-top: 4rem;
@@ -1178,6 +1184,12 @@ header .logo img {
   .questions .panel-group .panel-heading h4 {
     font-size: 1.2rem;
   }
+  .director {
+    padding: 4rem 0;
+  }
+  .director .question {
+    margin-top: 3rem;
+  }
   .director input {
     width: 27rem;
     display: block;
@@ -1187,9 +1199,13 @@ header .logo img {
   .director-btn {
     display: block;
     margin-top: 2rem;
-    margin-bottom: 7rem;
+    margin-bottom: 2rem;
     margin-left: auto;
     margin-right: auto;
+  }
+  .director .flex-center {
+    flex-direction: column;
+    justify-content: center;
   }
   .popup .capture-form {
     width: 28rem;
